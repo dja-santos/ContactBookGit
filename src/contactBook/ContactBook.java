@@ -66,7 +66,6 @@ public class ContactBook {
             if(contacts[i].getPhone() == phone)
                 name = contacts[i].getName();
         }
-        
         return name;
     }
 
