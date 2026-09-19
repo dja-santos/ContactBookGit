@@ -1,6 +1,7 @@
 import contactBook.Contact;
 import contactBook.ContactBook;
 
+import java.security.PublicKey;
 import java.util.Scanner;
 
 
@@ -13,6 +14,8 @@ public class Main {
     public static final String SET_PHONE      = "SP";
     public static final String SET_EMAIL      = "SE";
     public static final String LIST_CONTACTS  = "LC";
+    public static final String GET_NAME       = "GN";
+    public static final String EQUAL_PHONE    = "EP";
     public static final String QUIT           = "Q";
 
     //Constantes que definem as mensagens para o utilizador
@@ -22,6 +25,9 @@ public class Main {
     public static final String CONTACT_REMOVED = "contactBook.Contact removed.";
     public static final String CONTACT_UPDATED = "contactBook.Contact updated.";
     public static final String BOOK_EMPTY = "contactBook.Contact book empty.";
+    public static final String PHONE_DOESNT_EXIST = "Phone number does not exist.";
+    public static final String SHARE_NUMBER = "There are contacts that share phone numbers.";
+    public static final String DIFFERENT_NUMBER = "All contacts have different phone numbers.";
     public static final String QUIT_MSG = "Goodbye!";
     public static final String COMMAND_ERROR = "Unknown command.";
 
@@ -52,6 +58,12 @@ public class Main {
                     break;
                 case LIST_CONTACTS:
                     listAllContacts(cBook);
+                    break;
+                case GET_NAME:
+                    getName(in, cBook);
+                    break;
+                case EQUAL_PHONE:
+                    equalPhones(cBook);
                     break;
                 default:
                     System.out.println(COMMAND_ERROR);
@@ -146,5 +158,18 @@ public class Main {
             }
         }
         else System.out.println(BOOK_EMPTY);
+    }
+
+    private static void getName(Scanner in, ContactBook cBook){
+        int phone = in.nextInt();
+        in.nextLine();
+        String name = cBook.getName(phone);
+        if (name == null) System.out.println(PHONE_DOESNT_EXIST);
+        else System.out.println(name);
+    }
+
+    private static void equalPhones(ContactBook cBook){
+        if (cBook.equalPhones()) System.out.println(SHARE_NUMBER);
+        else System.out.println(DIFFERENT_NUMBER);
     }
 }
